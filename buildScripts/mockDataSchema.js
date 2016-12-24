@@ -1,34 +1,40 @@
 var schema = {
-  "type": "object",
-  "properties": {
+  "definitions": {
     "users": {
-      "type": "array",
-      "minItems": 3,
-      "maxItems": 5,
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "unique": true,
-            "minimum": 1
+      "type": "object",
+      "properties": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 5,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "unique": true,
+              "minimum": 1
+            },
+            "firstName": {
+              "type": "string",
+              "faker": "name.firstName"
+            },
+            "lastName": {
+              "type": "string",
+              "faker": "name.lastName"
+            },
+            "email": {
+              "type": "string",
+              "faker": "internet.email"
+            }
           },
-          "firstName": {
-            "type": "string",
-            "faker": "name.firstName"
-          },
-          "lastName": {
-            "type": "string",
-            "faker": "name.lastName"
-          },
-          "email": {
-            "type": "string",
-            "faker": "internet.email"
-          }
-        },
-        "required": ["id", "firstName", "lastName", "email"]
+          "required": ["id", "firstName", "lastName", "email"]
+        }
       }
-    },
+    }
+  },
+  "type": "object",
+
+  "properties": {
     "projects": {
       "type": "array",
       "minItems": 5,
@@ -40,6 +46,7 @@ var schema = {
             "unique": true,
             "minimum": 1
           },
+          "users": { "$ref": "#/definitions/users" },
           "title": {
             "type": "string",
             "faker": "internet.domainName"
@@ -63,6 +70,29 @@ var schema = {
                 "title": {
                   "type": "string",
                   "faker": "hacker.phrase"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "unique": true,
+                      "minimum": 1
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "faker": "name.firstName"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "faker": "name.lastName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "faker": "internet.email"
+                    }
+                  },
+                  "required": ["id", "firstName", "lastName", "email"]
                 },
                 "createdAt": {
                   "type": "string",
@@ -93,15 +123,15 @@ var schema = {
                   }
                 }
               },
-              "required": ["id", "title", "createdAt", "records"]
+              "required": ["id", "title", "user", "createdAt", "records"]
             }
           }
         },
-        "required": ["id", "title", "createdAt", "tasks"]
+        "required": ["id", "users", "title", "tasks", "createdAt"]
       }
     }
   },
-  "required": ["users", "projects"]
+  "required": ["project"]
 };
 
 module.exports = schema;
