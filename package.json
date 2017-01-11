@@ -6,7 +6,7 @@
   "scripts": {
     "generate-mock-data": "node buildScripts/generateMockData",
     "prestart-mockapi": "npm run generate-mock-data",
-    "start-mockapi": "json-server --watch src/api/db.json --port 3001",
+    "start-mockapi": "json-server --watch src/api/db-demo.json --port 3015",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
